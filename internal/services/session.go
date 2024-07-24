@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+	"log"
 	"sync"
 	"time"
 
@@ -46,6 +47,7 @@ func (sm *SessionManager) GetSession(id string) (*models.JSONTrie, error) {
 	if session, exists := sm.sessions[id]; exists {
 		return session.trie, nil
 	}
+	log.Printf("session not found for session id: %v", id)
 	return nil, errors.New("session not found")
 }
 

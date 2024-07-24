@@ -2,8 +2,10 @@ package services
 
 import (
 	"encoding/json"
-	"github.com/shammianand/fast-json-viewer/internal/models"
 	"io"
+	"log"
+
+	"github.com/shammianand/fast-json-viewer/internal/models"
 )
 
 type Parser struct {
@@ -38,11 +40,13 @@ func (p *Parser) parseValue(path string, v interface{}, trie *models.JSONTrie) {
 			}
 			newPath += k
 			p.parseValue(newPath, v, trie)
+			log.Println(newPath)
 		}
 	case []interface{}:
 		for i, v := range val {
 			newPath := path + "[" + string(i) + "]"
 			p.parseValue(newPath, v, trie)
+			log.Println(newPath)
 		}
 	default:
 		trie.Insert(path, v)

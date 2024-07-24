@@ -40,7 +40,7 @@ func main() {
 		),
 	))
 
-	mux.Handle("/upload/", middleware.Logging(logger)(
+	mux.Handle("/upload", middleware.Logging(logger)(
 		middleware.RateLimit(10, time.Minute)(
 			http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				handlers.UploadHandler(w, r, sessionManager, parser)

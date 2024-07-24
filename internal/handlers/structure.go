@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"strings"
 
@@ -16,6 +17,7 @@ func GetStructureHandler(w http.ResponseWriter, r *http.Request, sm *services.Se
 	}
 
 	sessionID := parts[2]
+	log.Printf("sessionID: %v", sessionID)
 	trie, err := sm.GetSession(sessionID)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
@@ -24,10 +26,13 @@ func GetStructureHandler(w http.ResponseWriter, r *http.Request, sm *services.Se
 
 	children, err := trie.GetChildren("")
 	if err != nil {
+		log.Println(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(children)
+	err = json.NewEncoder(w).Encode(children)
+	if err != nil {
+		log.Println("error while encoding children", err)
+	}
 }

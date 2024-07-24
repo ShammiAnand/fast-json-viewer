@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"log"
 	"strings"
 )
 
@@ -63,17 +64,27 @@ func (t *JSONTrie) Insert(path string, value interface{}) {
 }
 
 func (t *JSONTrie) Get(path string) (*JSONNode, error) {
+	if path == "" {
+		log.Println("ROOT CASE")
+		return t.Root, nil
+	}
 	parts := strings.Split(path, ".")
 	current := t.Root
+	log.Println("invoked GET method for JSONTrie", parts, current)
 
 	for _, part := range parts {
+		log.Println("starting with part", part)
+
 		if current.Children == nil {
+			log.Println("failed here")
 			return nil, errors.New("path not found")
 		}
 
+		log.Println(current.Children)
 		if child, exists := current.Children[part]; exists {
 			current = child
 		} else {
+			log.Println("failed here 2")
 			return nil, errors.New("path not found")
 		}
 	}

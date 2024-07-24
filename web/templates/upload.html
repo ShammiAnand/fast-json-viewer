@@ -5,10 +5,18 @@
     hx-post="/upload"
     hx-encoding="multipart/form-data"
     hx-target="#json-viewer"
+    hx-indicator="#loading"
   >
     <input type="file" name="jsonFile" accept=".json" required />
     <button type="submit">Upload</button>
   </form>
 </div>
+<div id="loading" class="htmx-indicator">Uploading...</div>
 <div id="json-viewer"></div>
+<script>
+  document.body.addEventListener("htmx:afterRequest", function (evt) {
+    console.log("HTMX request completed", evt.detail);
+    console.log("Response:", evt.detail.xhr.responseText);
+  });
+</script>
 {{end}}
