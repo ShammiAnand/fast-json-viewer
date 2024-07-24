@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON Viewer</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <link rel="stylesheet" href="/static/css/main.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Fast JSON Viewer</h1>
+    </header>
+    <main>{{template "content" .}}</main>
+    <footer>
+      <p>&copy; 2024 JSON Viewer</p>
+    </footer>
+    <script src="/static/js/app.js"></script>
+  </body>
+</html>

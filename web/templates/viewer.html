@@ -1,0 +1,21 @@
+{{define "node"}}
+<li>
+    {{if eq .Type "object" "array"}}
+    <span class="expander" hx-get="/expand/{{.Path}}" hx-target="next ul" hx-trigger="click">
+        {{if eq .Type "object"}}&#x25B6;{{else}}[{{end}}
+    </span>
+    {{end}}
+    <span class="key">{{.Key}}</span>:
+    {{if eq .Type "object"}}
+    <span class="value">{...}</span>
+    {{else if eq .Type "array"}}
+    <span class="value">[...]</span>
+    {{else}}
+    <span class="value">{{.Value}}</span>
+    {{end}}
+    {{if eq .Type "object" "array"}}
+    <ul class="collapsed"></ul>
+    {{if eq .Type "object"}}}</span>{{else}}]</span>{{end}}
+    {{end}}
+</li>
+{{end}}

@@ -1,0 +1,14 @@
+{{define "content"}}
+<div class="upload-container">
+  <h2>Upload JSON File</h2>
+  <form
+    hx-post="/upload"
+    hx-encoding="multipart/form-data"
+    hx-target="#json-viewer"
+  >
+    <input type="file" name="jsonFile" accept=".json" required />
+    <button type="submit">Upload</button>
+  </form>
+</div>
+<div id="json-viewer"></div>
+{{end}}
