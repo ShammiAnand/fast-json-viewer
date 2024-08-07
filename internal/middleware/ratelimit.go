@@ -7,6 +7,7 @@ import (
 	"golang.org/x/time/rate"
 )
 
+// only allows rps number of requests every per time(minute, second)
 func RateLimit(rps int, per time.Duration) func(http.Handler) http.Handler {
 	limiter := rate.NewLimiter(rate.Every(per/time.Duration(rps)), rps)
 	return func(next http.Handler) http.Handler {

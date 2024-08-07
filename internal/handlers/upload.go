@@ -2,8 +2,10 @@ package handlers
 
 import (
 	"fmt"
-	"github.com/shammianand/fast-json-viewer/internal/services"
+	"log"
 	"net/http"
+
+	"github.com/shammianand/fast-json-viewer/internal/services"
 )
 
 func UploadHandler(w http.ResponseWriter, r *http.Request, sm *services.SessionManager, parser *services.Parser) {
@@ -33,5 +35,10 @@ func UploadHandler(w http.ResponseWriter, r *http.Request, sm *services.SessionM
 	sessionID := sm.CreateSession(trie)
 
 	w.Header().Set("Content-Type", "text/html")
-	fmt.Fprintf(w, `<div id="json-viewer" hx-get="/structure/%s" hx-trigger="load"></div>`, sessionID)
+	numBytesWritten, err := fmt.Fprintf(w, `<div id="json-viewer" hx-get="/structure/%s" hx-trigger="load"></div>`, sessionID)
+	if err != nil {
+		log.Println("error while writing to rw", err)
+	} else {
+		log.Println("wriiten: ", numBytesWritten, " bytes")
+	}
 }
